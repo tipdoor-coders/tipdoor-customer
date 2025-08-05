@@ -33,7 +33,7 @@ const Navbar = () => {
     }
 
     return (
-        <header className='bg-white py-2.5 sticky top-0 z-50 md:shadow-sm shadow-lg'>
+        <header className='bg-white py-2.5 sticky top-0 z-50 md:shadow-sm shadow-md'>
             <nav className='flex justify-between items-center max-w-[1200px] mx-auto px-5 max-md:grid max-md:grid-cols-3 max-md:grid-rows-2'>
                 <div className="logo max-md:row-start-1 max-md:">
                     <img className='md:h-12 h-10' src="/PNG.png" alt="Logo" />

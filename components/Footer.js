@@ -33,7 +33,7 @@ const Footer = () => {
                     <ul className='list-none space-y-2.5 social-media flex gap-3.5'>
                         <li><NavLink href='#' className='facebook text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Facebook</NavLink></li>
                         <li><NavLink href='#' className='twitter text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Twitter</NavLink></li>
-                        <li><NavLink href='https://www.instagram.com/tipdoor' className='instagram text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Instagram</NavLink></li>
+                        <li><NavLink href='https://www.instagram.com/tipdoor?utm_source=qr&igsh=MTE1aHduZHl3YzNqeg==' className='instagram text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Instagram</NavLink></li>
                         <li><NavLink href='#' className='youtube text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>YouTube</NavLink></li>
                     </ul>
                 </div>

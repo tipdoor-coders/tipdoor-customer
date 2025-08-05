@@ -64,14 +64,14 @@ const Navbar = () => {
 
                 <div className='flex items-center max-md:row-start-1'>
                     <input className='p-2 border-2 border-[#ccc] rounded-[4px] md:w-[250px] w-52 mr-2.5' type="text" placeholder="Search..." />
-                    <button className='px-3 py-2 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">Search</button>
+                    <button className='px-3 py-1.5 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">Search</button>
                 </div>
 
                 <div>
-                    {session && <button className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ' onClick={() => { signOut() }}>Logout</button>}
-                    
+                    {session && <button className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2' onClick={() => { signOut() }}>Logout</button>}
+
                     {!session && <Link href={"/login"}>
-                        <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2' >Login</button></Link>}
+                        <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2'>Login</button></Link>}
                 </div>
 
             </nav>

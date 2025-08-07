@@ -4,6 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import NavLink from 'next/link'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const Navbar = () => {
     const { data: session } = useSession()
@@ -64,14 +65,18 @@ const Navbar = () => {
 
                 <div className='flex items-center max-md:row-start-1 max-md:col-span-3'>
                     <input className='p-2 border-2 border-[#ccc] rounded-[4px] md:w-[250px] w-52 md:mr-2.5 mr-1' type="text" placeholder="Search..." />
-                    <button className='md:px-3 px-1.5 py-1.5 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">Search</button>
+                    <button className='md:px-3 px-1.5 py-1.5 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">
+                        {/* <img src="/magnifying-glass" alt="search" /> */}
+                        <Image src="/mg2.png" alt="search" width={25} height={25} />
+                    </button>
                 </div>
 
                 <div className='max-md:col-start-5 flex justify-end'>
-                    {session && <button className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2' onClick={() => { signOut() }}>Logout</button>}
+                    {session && <button className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2' onClick={() => { signOut() }}>Logout</button>}
 
                     {!session && <Link href={"/login"}>
-                        <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2'>Login</button></Link>}
+                        <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2'>Login</button>
+                    </Link>}
                 </div>
 
             </nav>

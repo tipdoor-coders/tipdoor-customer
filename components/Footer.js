@@ -7,8 +7,8 @@ const Footer = () => {
             <div className='footer-content flex justify-between flex-wrap mb-5'>
                 {/* Site Links Section */}
                 <div className='footer-section flex-1 min-w-[200px] mr-5'>
-                    <h3 className='text-2xl mb-3.5 text-[#fff]'>Company</h3>
-                    <ul className='list-none space-y-2.5'>
+                    <h3 className='text-2xl md:mb-3.5 mb-2  text-[#fff]'>Company</h3>
+                    <ul className='list-none md:space-y-2.5 space-y-1'>
                         <li><NavLink href='#' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>About Us</NavLink></li>
                         <li><NavLink href='#' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>Careers</NavLink></li>
                         <li><NavLink href='#' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>Privacy Policy</NavLink></li>
@@ -18,8 +18,8 @@ const Footer = () => {
 
                 {/* Customer Service Section */}
                 <div className='footer-section flex-1 min-w-[200px] mr-5'>
-                    <h3 className='text-2xl mb-3.5 text-[#fff]'>Customer Service</h3>
-                    <ul className='list-none space-y-2.5'>
+                    <h3 className='text-2xl md:mb-3.5 mb-2 max-md:mt-3.5 text-[#fff]'>Customer Service</h3>
+                    <ul className='list-none md:space-y-2.5 space-y-1'>
                         <li><NavLink href='/contactUs' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>Contact Us</NavLink></li>
                         <li><NavLink href='#' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>FAQs</NavLink></li>
                         <li><NavLink href='#' className='text-[#bbb] no-underline text-base transition-colors duration-300 ease-in-out hover:text-[#fff]'>Returns</NavLink></li>
@@ -29,8 +29,8 @@ const Footer = () => {
 
                 {/* Social Media Section */}
                 <div className='footer-section flex-1 min-w-[200px] mr-5'>
-                    <h3 className='text-2xl mb-3.5 text-[#fff]'>Follow Us</h3>
-                    <ul className='list-none space-y-2.5 social-media flex gap-3.5'>
+                    <h3 className='text-2xl md:mb-3.5 mb-2 max-md:mt-3.5 text-[#fff]'>Follow Us</h3>
+                    <ul className='list-none md:space-y-2.5 space-y-1 social-media flex gap-3.5'>
                         <li><NavLink href='#' className='facebook text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Facebook</NavLink></li>
                         <li><NavLink href='#' className='twitter text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Twitter</NavLink></li>
                         <li><NavLink href='https://www.instagram.com/tipdoor?utm_source=qr&igsh=MTE1aHduZHl3YzNqeg==' target='_blank' className='instagram text-[#bbb] no-underline text-[1.2rem] transition-colors duration-300 ease-in-out hover:text-[#fff]'>Instagram</NavLink></li>

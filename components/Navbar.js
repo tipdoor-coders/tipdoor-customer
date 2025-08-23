@@ -65,7 +65,7 @@ const Navbar = () => {
 
                 <div className='flex items-center max-md:row-start-1 max-md:col-span-3'>
                     <input className='p-2 border-2 border-[#ccc] rounded-[4px] md:w-[250px] w-52 md:mr-2.5 mr-1' type="text" placeholder="Search..." />
-                    <button className='md:px-3 px-1.5 py-1.5 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">
+                    <button className='md:px-3 px-0.5 py-0.5 bg-[rgba(95,24,235,0.4)] border-none rounded-[4px] text-black cursor-pointer hover:bg-[#5e17eb] hover:text-white' type="submit">
                         {/* <img src="/magnifying-glass" alt="search" /> */}
                         <Image src="/mg2.png" alt="search" width={25} height={25} />
                     </button>

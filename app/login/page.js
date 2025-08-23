@@ -11,7 +11,7 @@ const Login = () => {
 
           <h2 className='text-3xl font-bold my-5'>Sign up</h2>
 
-          <button
+          <button onClick={() => { signIn("google") }}
             className="flex items-center w-64 bg-slate-50 text-black border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
             <svg className="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
               viewBox="-0.5 0 48 48" version="1.1">

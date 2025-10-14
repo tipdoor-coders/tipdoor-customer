@@ -1,13 +1,70 @@
 "use client"
 import React from 'react'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { loginUser } from '@/lib/api';
 import { useSession, signIn, signOut } from "next-auth/react"
 
 const Login = () => {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  async function handleSubmit(e){
+    e.preventDefault();
+    setError('');
+
+    try {
+      await loginUser(username, password);
+      router.push('/home');
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <>
       <div className="social-login-buttons min-h-[87vh] flex justify-center items-center">
 
         <div className="flex flex-col gap-2 items-center p-10">
+          <h2 className="text-3xl font-bold my-5">Sign In</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-64">
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <div>
+              <label className="block text-gray-700 text-sm font-medium mb-1">Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff]"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 text-sm font-medium mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff]"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-[#007bff] hover:bg-[#0056b3] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <p className="mt-4 text-center text-gray-600">
+            Don't have an account?{' '}
+            <a href="/register" className="text-[#007bff] hover:underline font-medium">
+              Sign up here
+            </a>
+          </p>
 
           <h2 className='text-3xl font-bold my-5'>Sign up</h2>
 

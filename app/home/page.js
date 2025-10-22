@@ -1,15 +1,47 @@
 "use client"
-import React from 'react'
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { fetchWithAuth } from '@/lib/api';
 
 const Home = () => {
-    // const { data: session } = useSession()
+    const [products, setProducts] = useState([]);
+    const [productsError, setProductsError] = useState(null)
+    const [latestProducts, setLatestProducts] = useState([]);
+    const [latestError, setLatestError] = useState(null);
 
-    // if (!session) {
-    //     const router = useRouter()
-    //     router.push('/login')
-    // }
+    const handleAddToCart = async (e, product) => {
+        e.preventDefault(); // prevents article's onClick
+        console.log('Add to cart', product.id);
+    };
+
+    // Fetch products
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetchWithAuth('customer/products/')
+                setProducts(response)
+                setProductsError(null)
+            } catch (err) {
+                setProductsError(err.message || 'Failed to fetch data')
+                console.error('Fetch error:', err)
+            }
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetchWithAuth('latest-arrivals/')
+                setLatestProducts(response)
+                setLatestError(null)
+            } catch (err) {
+                setLatestError(err.message || 'Failed to fetch data')
+                console.error('Fetch error:', err)
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
         <>
@@ -43,19 +75,29 @@ const Home = () => {
                 <section className="product-sections mt-10">
                     <div className="product-category mb-10 new-products">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>New Products</h2>
+                        {productsError && <p className="text-red-500">{productsError}</p>}
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                            {/* <!-- Example of a product card --> */}
-                            {
-                                [
-                                    { id: 1, name: "New Product 1", price: "100.00", image: "new-product1.jpg" },
-                                    { id: 2, name: "New Product 2", price: "110.00", image: "new-product2.jpg" },
-                                    { id: 3, name: "New Product 3", price: "120.00", image: "new-product3.jpg" },
-                                    { id: 4, name: "New Product 4", price: "130.00", image: "new-product4.jpg" },
-                                    { id: 5, name: "New Product 5", price: "140.00", image: "new-product5.jpg" },
-                                    { id: 6, name: "New Product 6", price: "150.00", image: "new-product6.jpg" },
-                                    { id: 7, name: "New Product 7", price: "160.00", image: "new-product7.jpg" },
-                                    { id: 8, name: "New Product 8", price: "170.00", image: "new-product8.jpg" }
-                                ].map((product) => (
+                            {products.length === 0 ? (<p>No products available</p>) : (
+                                products.map((product) => (
+                                    <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
+                                        <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
+                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
+                                            <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
+                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                        </article>
+                                    </Link>
+                                ))
+                            )}
+                        </div >
+                    </div >
+
+                    <div className="product-category mb-10 latest-arrival">
+                        <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Latest Arrival</h2>
+                        {latestError && <p className="text-red-500">{latestError}</p>}
+                        <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                            {latestProducts.length === 0 ? (<p>No products available</p>) : (
+                                latestProducts.map((product) => (
                                     <article key={product.id} className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
                                         <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                         <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
@@ -63,120 +105,25 @@ const Home = () => {
                                         <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
                                     </article>
                                 ))
-                            }
-                        </div >
-                    </div >
-
-                    <div className="product-category mb-10 latest-arrival">
-                        <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Latest Arrival</h2>
-                        <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 1</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 2</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 3</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 4</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 5</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 6</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 7</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="latest-product1.jpg" alt="Latest Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Latest Product 8</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;150.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Add more products as needed --> */}
+                            )}
                         </div>
                     </div>
 
                     <div className="product-category mb-10 recommended">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Recommended for You</h2>
+                        {productsError && <p className="text-red-500">{productsError}</p>}
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 1</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 2</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 3</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 4</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 5</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Example of a product card --> */}
-                            <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                <img className='w-full h-auto rounded-lg mb-2.5' src="recommended-product1.jpg" alt="Recommended Product 1" />
-                                <h3 className='font-bold text-xl text-gray-800'>Recommended Product 6</h3>
-                                <p className='text-gray-800 mb-5'>&#8377;120.00</p>
-                                <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                            </article>
-                            {/* <!-- Add more products as needed --> */}
-                        </div>
+                            {products.length === 0 ? (<p>No products available</p>) : (
+                                products.map((product) => (
+                                    <article key={product.id} className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
+                                        <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                        <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
+                                        <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
+                                        <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
+                                    </article>
+                                ))
+                            )}
+                        </div >
                     </div>
                 </section >
             </main >

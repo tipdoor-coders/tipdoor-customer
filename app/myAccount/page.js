@@ -1,6 +1,6 @@
 import React from 'react'
 
-const myAccount = () => {
+const MyAccount = () => {
     return (
         <main className='p-5'>
             <section className="account-section flex justify-evenly flex-wrap">

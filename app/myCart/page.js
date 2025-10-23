@@ -1,6 +1,6 @@
 import React from 'react'
 
-const myCart = () => {
+const MyCart = () => {
     return (
         <main className='min-h-[80vh] p-2.5'>
             <section className="cart-container bg-linear-200 from-[#5e17eb] to-[#5f18eb66] md:w-4/5 w-[95vw] mx-auto md:p-5 p-2.5 rounded-lg shadow-xl">

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const contactUs = () => {
+const ContactUs = () => {
     return (
         <main className="max-w-[1200px] mx-auto p-5">
             <section className="contact-section ">

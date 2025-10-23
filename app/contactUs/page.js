@@ -46,4 +46,4 @@ const ContactUs = () => {
     )
 }
 
-export default contactUs
+export default ContactUs

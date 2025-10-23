@@ -59,4 +59,4 @@ const MyCart = () => {
     )
 }
 
-export default myCart
+export default MyCart

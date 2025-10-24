@@ -11,7 +11,16 @@ const Home = () => {
 
     const handleAddToCart = async (e, product) => {
         e.preventDefault(); // prevents article's onClick
-        console.log('Add to cart', product.id);
+        try {
+            const response = await fetchWithAuth('cart/add/', {
+                method: 'POST',
+                body: JSON.stringify({product_id: product.id})
+            })
+            console.log('Added to cart:', response)
+        } catch (err) {
+            console.error(err);
+            alert('Failed to add to cart.')
+        }
     };
 
     // Fetch products

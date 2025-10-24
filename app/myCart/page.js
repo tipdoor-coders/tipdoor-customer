@@ -1,12 +1,22 @@
 'use client';
-import React, { useState } from 'react'
+import { fetchWithAuth } from '@/lib/api'
+import React, { useEffect, useState } from 'react'
 
 const MyCart = () => {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: "Product 1", price: 20.055, quantity: 1, image: "product-image.jpg" },
-        { id: 2, name: "Product 2", price: 40.0, quantity: 1, image: "product-image.jpg" },
-        { id: 3, name: "Product 3", price: 115.0, quantity: 1, image: "product-image.jpg" },
-    ]);
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const response = await fetchWithAuth('cart/');
+                setCartItems(response.items);
+            } catch (err) {
+                console.error('Failed to fetch cart:', err);
+            }
+        };
+
+        fetchCart();
+    }, []);
 
     // Update quantity
     const handleQuantityChange = (id, newQuantity) => {
@@ -23,7 +33,7 @@ const MyCart = () => {
     };
 
     // Calculate total
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const total = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
     return (
         <main className='min-h-[80vh] p-2.5'>
@@ -40,15 +50,15 @@ const MyCart = () => {
                             >
                                 <img
                                     className="md:w-20 w-24 md:h-20 h-24 object-cover rounded-lg"
-                                    src={item.image}
-                                    alt={item.name}
+                                    src={item.product.image}
+                                    alt={item.product.name}
                                 />
                                 <div className="item-details flex-1 md:ml-3.5 ml-0 max-md:mt-2">
-                                    <p className="item-name md:text-lg text-base font-bold">{item.name}</p>
+                                    <p className="item-name md:text-lg text-base font-bold">{item.product.name}</p>
                                     <p>
                                         &#8377;
                                         <span className="item-price text-slate-500 md:text-base text-sm">
-                                            {item.price.toFixed(2)}
+                                            {Number(item.product.price).toFixed(2)}
                                         </span>
                                     </p>
                                 </div>

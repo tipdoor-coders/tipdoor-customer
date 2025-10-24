@@ -14,7 +14,7 @@ const Home = () => {
         try {
             const response = await fetchWithAuth('cart/add/', {
                 method: 'POST',
-                body: JSON.stringify({product_id: product.id})
+                body: JSON.stringify({ product_id: product.id })
             })
             console.log('Added to cart:', response)
         } catch (err) {
@@ -107,12 +107,14 @@ const Home = () => {
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             {latestProducts.length === 0 ? (<p>No products available</p>) : (
                                 latestProducts.map((product) => (
-                                    <article key={product.id} className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                        <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
-                                        <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
-                                        <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
-                                        <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                                    </article>
+                                    <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
+                                        <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
+                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
+                                            <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
+                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                        </article>
+                                    </Link>
                                 ))
                             )}
                         </div>
@@ -124,12 +126,14 @@ const Home = () => {
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             {products.length === 0 ? (<p>No products available</p>) : (
                                 products.map((product) => (
-                                    <article key={product.id} className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                        <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
-                                        <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
-                                        <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
-                                        <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300'>Add to Cart</button>
-                                    </article>
+                                    <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
+                                        <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
+                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
+                                            <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
+                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                        </article>
+                                    </Link>
                                 ))
                             )}
                         </div >

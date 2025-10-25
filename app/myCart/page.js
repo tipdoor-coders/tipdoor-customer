@@ -19,17 +19,27 @@ const MyCart = () => {
     }, []);
 
     // Update quantity
-    const handleQuantityChange = (id, newQuantity) => {
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
-            )
-        );
+    const handleQuantityChange = async (id, newQuantity) => {
+        if (newQuantity < 1) return;
+        try {
+            const response = await fetchWithAuth(`cart/update/${id}/`, {
+                method: 'PATCH',
+                body: JSON.stringify({ quantity: newQuantity })
+            })
+            setCartItems(response.items)
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     // Remove item
-    const handleRemove = (id) => {
-        setCartItems((prev) => prev.filter((item) => item.id !== id));
+    const handleRemove = async (id) => {
+        try {
+            const response = await fetchWithAuth(`cart/remove/${id}/`, { method: 'DELETE' })
+            setCartItems(response.items)
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     // Calculate total
@@ -63,13 +73,28 @@ const MyCart = () => {
                                     </p>
                                 </div>
                                 <div className="item-quantity flex items-center">
-                                    <input
-                                        type="number"
-                                        value={item.quantity}
-                                        min="1"
-                                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
-                                        className="quantity md:w-12 w-10 md:mr-2.5 mr-2 p-1 text-center border border-gray-300 rounded"
-                                    />
+                                    <div className="flex items-center space-x-2">
+                                        <button
+                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                            disabled={item.quantity <= 1}
+                                            className={"px-2 py-1 text-white bg-[#5e17eb] rounded-md hover:bg-[#4b12c2] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"}
+                                        >
+                                            -
+                                        </button>
+                                        <input
+                                            type="number"
+                                            value={item.quantity}
+                                            min="1"
+                                            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
+                                            className="quantity md:w-12 w-10 md:mr-2.5 mr-2 p-1 text-center border border-gray-300 rounded"
+                                        />
+                                        <button
+                                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                            className={"px-2 py-1 text-white bg-[#5e17eb] rounded-md hover:bg-[#4b12c2] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                     <button
                                         onClick={() => handleRemove(item.id)}
                                         className="remove-item px-2.5 py-1 bg-[#ff5e5e] hover:bg-[#ff4d4d] text-white border-none cursor-pointer rounded-sm"

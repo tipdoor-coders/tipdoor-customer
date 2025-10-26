@@ -1,12 +1,13 @@
 'use client'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-const Search = () => {
+const SearchResults = () => {
     const [results, setResults] = useState([])
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const searchParams = useSearchParams()
     const query = searchParams.get('q') || ''
 
@@ -37,7 +38,7 @@ const Search = () => {
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                 {results.map((product) => (
                     <Link href={`/products/${product.id}`} key={product.id} target='_blank'>
-                        <div key={product.id} className='border p-4 rounded-md'>
+                        <div className='border p-4 rounded-md'>
                             <img src={product.image} alt={product.name} className='w-full h-48 object-cover mb-2' />
                             <h2 className='text-lg font-semibold'>{product.name}</h2>
                             <p>₹{Number(product.price).toFixed(2)}</p>
@@ -49,4 +50,10 @@ const Search = () => {
     )
 }
 
-export default Search
+export default function Search() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SearchResults />
+        </Suspense>
+    )
+}

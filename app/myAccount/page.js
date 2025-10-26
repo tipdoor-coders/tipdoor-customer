@@ -1,12 +1,24 @@
 'use client';
-import React, { useState } from 'react'
+import { fetchWithAuth } from '@/lib/api';
+import React, { useEffect, useState } from 'react'
 
 const MyAccount = () => {
     const [formData, setFormData] = useState({
-        name: "Shriman Udaaharan",
-        email: "Shriman.udaaharan@example.com",
-        phone: "+91 984-567-8910",
+        username: "",
+        email: "",
     });
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await fetchWithAuth(`user/`);
+                setFormData(response);
+            } catch (err) {
+                console.log("Failed to fetch user info: ", err);
+            }
+        };
+        fetchUser();
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,7 +47,7 @@ const MyAccount = () => {
                 {/* <!-- Account details or form --> */}
                 <div className="account-details md:w-1/2 w-full p-5 bg-linear-125 from-[#5e17eb] to-[#5f18eb66] rounded-lg">
                     <h2 className='text-2xl font-bold mb-5 text-white'>My Account</h2>
-                    <p className='text-lg text-white'><strong>Name:</strong> {formData.name}</p>
+                    <p className='text-lg text-white'><strong>Name:</strong> {formData.username}</p>
                     <p className='text-lg text-white'><strong>Email:</strong> {formData.email}</p>
                     <p className='text-lg text-white'><strong>Phone:</strong> {formData.phone}</p>
 
@@ -47,7 +59,7 @@ const MyAccount = () => {
                             type="text"
                             id="name"
                             name="name"
-                            value={formData.name}
+                            value={formData.username}
                             onChange={handleChange}
                             required
                         />

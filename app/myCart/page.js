@@ -1,9 +1,11 @@
 'use client';
 import { fetchWithAuth } from '@/lib/api'
 import React, { useEffect, useState } from 'react'
+import { useRouter } from "next/navigation"
 
 const MyCart = () => {
     const [cartItems, setCartItems] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchCart = async () => {
@@ -117,7 +119,10 @@ const MyCart = () => {
                         <p>
                             Total: &#8377;<span id="total-price">{total.toFixed(2)}</span>
                         </p>
-                        <button className="checkout-btn bg-[#5cb85c] hover:bg-[#4cae4c] px-5 py-2.5 text-white md:text-base text-lg max-md:w-full border-none rounded-sm cursor-pointer">
+                        <button
+                            onClick={() => router.push("/checkout")}
+                            className="checkout-btn bg-[#5cb85c] hover:bg-[#4cae4c] px-5 py-2.5 text-white md:text-base text-lg max-md:w-full border-none rounded-sm cursor-pointer"
+                        >
                             Proceed to Checkout
                         </button>
                     </div>

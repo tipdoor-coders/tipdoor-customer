@@ -30,7 +30,7 @@ const Search = () => {
 
     return (
         <div className='container mx-auto p-4'>
-            <h1 className='text-2xl font-bold mb-4'>Search Results for '{query}'</h1>
+            <h1 className='text-2xl font-bold mb-4'>Search Results for &apos;{query}&apos;</h1>
             {loading && <p>Loading...</p>}
             {error && <p className='text-red-500'>{error}</p>}
             {results.length === 0 && !loading && !error && <p>No products found.</p>}

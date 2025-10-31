@@ -8,6 +8,7 @@ const Register = () => {
     const router = useRouter()
     const [formData, setFormData] = useState({
         username: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -28,7 +29,7 @@ const Register = () => {
         setLoading(true)
         setError(null)
         try {
-            await registerUser(formData.username, formData.password, formData.email)
+            await registerUser(formData.username, formData.password, formData.email, formData.name)
             router.push(`/home`)
         } catch (err) {
             setError(err.message)
@@ -48,6 +49,15 @@ const Register = () => {
                     value={formData.username}
                     onChange={handleChange}
                     placeholder="Username"
+                    className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e17eb]"
+                    required
+                />
+                <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Name"
                     className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5e17eb]"
                     required
                 />

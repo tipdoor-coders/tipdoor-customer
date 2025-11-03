@@ -27,8 +27,18 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetchWithAuth('customer/products/')
-                setProducts(response)
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/customer/products/`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                setProducts(data)
                 setProductsError(null)
             } catch (err) {
                 setProductsError(err.message || 'Failed to fetch data')
@@ -41,8 +51,18 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetchWithAuth('latest-arrivals/')
-                setLatestProducts(response)
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/latest-arrivals/`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = response.json();
+                setLatestProducts(data)
                 setLatestError(null)
             } catch (err) {
                 setLatestError(err.message || 'Failed to fetch data')

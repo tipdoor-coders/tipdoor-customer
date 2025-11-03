@@ -61,7 +61,7 @@ const Home = () => {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
 
-                const data = response.json();
+                const data = await response.json();
                 setLatestProducts(data)
                 setLatestError(null)
             } catch (err) {

@@ -27,7 +27,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/customer/products/`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },

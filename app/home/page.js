@@ -2,12 +2,14 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { fetchWithAuth } from '@/lib/api';
+import Image from 'next/image';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [productsError, setProductsError] = useState(null)
     const [latestProducts, setLatestProducts] = useState([]);
     const [latestError, setLatestError] = useState(null);
+    const [index, setIndex] = useState(0);
 
     const handleAddToCart = async (e, product) => {
         e.preventDefault(); // prevents article's onClick
@@ -72,12 +74,41 @@ const Home = () => {
         fetchData()
     }, [])
 
+    // Moving images
+    const images = [
+        '/fashion.jpg',
+        '/shopping.jpg',
+        '/shopping3.jpg',
+        '/shopping2.jpg',
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex((prev) => (prev + 1) % images.length);
+        }, 4000); // 4 seconds per image
+        return () => clearInterval(timer);
+    }, []);
+
     return (
         <>
             <main className='max-w-[1200px] mx-auto p-5'>
                 {/* <!-- 1. Big Picture as a Promotion Banner --> */}
-                <section className='promotion-banner w-full md:h-[65vh] h-[200px] mb-10 overflow-hidden rounded-lg'>
-                    <img className="banner-image w-full h-full object-cover hover:scale-105 duration-300 ease-in-out" src="/fashion.jpg" alt="Big Promotion Banner" />
+                <section className='promotion-banner w-full md:h-[65vh] h-[200px] mb-10 overflow-hidden rounded-lg relative'>
+                    {images.map((src, i) => (
+                        <div
+                            key={i}
+                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === index ? 'opacity-100' : 'opacity-0'
+                                }`}
+                        >
+                            <Image
+                                src={src}
+                                alt={`Promotion Banner ${i + 1}`}
+                                fill
+                                className="object-cover"
+                                priority={i === 0} // preload the first one
+                            />
+                        </div>
+                    ))}
                 </section>
 
                 {/* <!-- 2. Features with Several Graphics --> */}

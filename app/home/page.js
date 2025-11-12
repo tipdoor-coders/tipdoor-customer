@@ -78,8 +78,9 @@ const Home = () => {
     const images = [
         '/fashion.jpg',
         '/shopping.jpg',
-        '/shopping3.jpg',
         '/shopping2.jpg',
+        '/shopping3.jpg',
+        '/shopping4.jpg',
     ];
 
     useEffect(() => {
@@ -135,7 +136,7 @@ const Home = () => {
                         </svg>
                         <p className="text-sm text-gray-800 font-semibold">Personalized Picks</p>
                         <p className="md:text-sm text-[11px] text-gray-600">
-                            Curated styles based on your preferences and past choices
+                            Curated styles based on your preferences
                         </p>
                     </div>
                     <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">

@@ -83,17 +83,41 @@ const Home = () => {
                 {/* <!-- 2. Features with Several Graphics --> */}
                 <section className="features flex justify-between max-md:items-center md:gap-5 gap-1.5 mb-10">
                     <h2 className='max-md:hidden text-3xl font-bold mb-5 text-center w-1/3'>Our Features</h2>
-                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md">
+                    <div className="feature text-center flex flex-col md:justify-center items-center flex-1 px-4 py-2 bg-white rounded-lg shadow-md mb-4 md:mb-0 transition-transform hover:-translate-y-1 hover:shadow-lg">
+                        <img className="feature-image md:w-24 w-10 h-12 object-contain mb-2" src="/woman.png" alt="AI Try-On" />
+                        <p className='text-sm text-gray-800 font-semibold'>AI Try-On Available</p>
+                        <p className='md:text-sm text-[11px] text-gray-600'>Virtually try outfits before you buy with our AI-powered fitting room</p>
+                    </div>
+                    {/* Personalized Recommendations */}
+                    <div className="feature text-center flex flex-col md:justify-center items-center flex-1 px-4 py-3 bg-white rounded-xl shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 64 64"
+                            className="md:w-24 w-8 h-12 mb-2"
+                            fill="none"
+                            stroke="#10B981"
+                            strokeWidth="2"
+                        >
+                            <path d="M32 8v48M8 32h48" />
+                            <circle cx="32" cy="32" r="18" stroke="#10B981" />
+                            <path d="M32 18a14 14 0 0 1 0 28" />
+                        </svg>
+                        <p className="text-sm text-gray-800 font-semibold">Personalized Picks</p>
+                        <p className="md:text-sm text-[11px] text-gray-600">
+                            Curated styles based on your preferences and past choices
+                        </p>
+                    </div>
+                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/hyperlocal.svg" alt="Feature 1" />
                         <p className='text-sm text-gray-700 pb-0.5'><strong>Hyperlocal Model</strong></p>
                         <p className='md:text-sm text-[11px] text-gray-700'>Authentically, Right from your nearest retailer</p>
                     </div>
-                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md">
+                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/fast_deliver.svg" alt="Feature 2" />
-                        <p className='text-sm text-gray-700 pb-0.5'><strong>30-60 Min. Delivery</strong></p>
-                        <p className='md:text-sm text-[11px] text-gray-700'>From your finger tip to your doorstep within 10-15 min</p>
+                        <p className='text-sm text-gray-700 pb-0.5'><strong>3-6 Days Delivery</strong></p>
+                        <p className='md:text-sm text-[11px] text-gray-700'>From your finger tip to your doorstep within 3-6 days</p>
                     </div>
-                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md">
+                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/return.svg" alt="Feature 3" />
                         <p className='text-sm text-gray-700 pb-0.5'><strong>10 min Quality Check</strong></p>
                         <p className='md:text-sm text-[11px] text-gray-700'>Quality check on arrival available</p>

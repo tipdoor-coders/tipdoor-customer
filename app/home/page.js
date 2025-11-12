@@ -108,19 +108,9 @@ const Home = () => {
                         </p>
                     </div>
                     <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
-                        <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/hyperlocal.svg" alt="Feature 1" />
-                        <p className='text-sm text-gray-700 pb-0.5'><strong>Hyperlocal Model</strong></p>
-                        <p className='md:text-sm text-[11px] text-gray-700'>Authentically, Right from your nearest retailer</p>
-                    </div>
-                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/fast_deliver.svg" alt="Feature 2" />
                         <p className='text-sm text-gray-700 pb-0.5'><strong>3-6 Days Delivery</strong></p>
                         <p className='md:text-sm text-[11px] text-gray-700'>From your finger tip to your doorstep within 3-6 days</p>
-                    </div>
-                    <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
-                        <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/return.svg" alt="Feature 3" />
-                        <p className='text-sm text-gray-700 pb-0.5'><strong>10 min Quality Check</strong></p>
-                        <p className='md:text-sm text-[11px] text-gray-700'>Quality check on arrival available</p>
                     </div>
                 </section>
 

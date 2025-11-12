@@ -115,10 +115,11 @@ const Home = () => {
                 {/* <!-- 2. Features with Several Graphics --> */}
                 <section className="features flex justify-between max-md:items-center md:gap-5 gap-1.5 mb-10">
                     <h2 className='max-md:hidden text-3xl font-bold mb-5 text-center w-1/3'>Our Features</h2>
+                    {/* AI Try-On */}
                     <div className="feature text-center flex flex-col md:justify-center items-center flex-1 px-4 py-2 bg-white rounded-lg shadow-md mb-4 md:mb-0 transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-10 h-12 object-contain mb-2" src="/woman.png" alt="AI Try-On" />
                         <p className='text-sm text-gray-800 font-semibold'>AI Try-On Available</p>
-                        <p className='md:text-sm text-[11px] text-gray-600'>Virtually try outfits before you buy with our AI-powered fitting room</p>
+                        <p className='md:text-sm text-[11px] text-gray-600'>Virtually try outfits before you buy</p>
                     </div>
                     {/* Personalized Recommendations */}
                     <div className="feature text-center flex flex-col md:justify-center items-center flex-1 px-4 py-3 bg-white rounded-xl shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
@@ -139,6 +140,7 @@ const Home = () => {
                             Curated styles based on your preferences
                         </p>
                     </div>
+                    {/* Fast Delivery */}
                     <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-1.5 bg-white rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg">
                         <img className="feature-image md:w-24 w-7 h-12 object-contain mb-1.5" src="/fast_deliver.svg" alt="Feature 2" />
                         <p className='text-sm text-gray-700 pb-0.5'><strong>3-6 Days Delivery</strong></p>

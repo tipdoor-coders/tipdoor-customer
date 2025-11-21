@@ -14,14 +14,23 @@ const Home = () => {
     const handleAddToCart = async (e, product) => {
         e.preventDefault(); // prevents article's onClick
         try {
-            const response = await fetchWithAuth('cart/add/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/add/`, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({ product_id: product.id })
-            })
-            console.log('Added to cart:', response)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Added to cart:', data);
         } catch (err) {
             console.error(err);
-            alert('Failed to add to cart.')
+            alert('Failed to add to cart.');
         }
     };
 

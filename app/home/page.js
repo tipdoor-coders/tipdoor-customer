@@ -100,6 +100,22 @@ const Home = () => {
 
     return (
         <>
+            <header className="bg-white shadow-sm">
+                <div className="max-w-[1200px] mx-auto p-5">
+                    <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">
+                        Welcome to&nbsp;
+                        <span className="bg-[linear-gradient(35deg,#5e17eb,rgba(95,24,235,0.4))] bg-clip-text text-transparent drop-shadow-sm">
+                            TipDoor
+                        </span>
+                    </h1>
+                    <p className="text-gray-600 mt-2 text-lg">Your one-stop shop for the latest fashion trends with&nbsp;
+                        <span className="font-semibold bg-gradient-to-r from-purple-600 via-purple-400 to-purple-600 bg-clip-text text-transparent">
+                            AI Try-On
+                        </span>
+                    </p>
+                </div>
+            </header>
+
             <main className='max-w-[1200px] mx-auto p-5'>
                 {/* <!-- 1. Big Picture as a Promotion Banner --> */}
                 <section className='promotion-banner w-full md:h-[65vh] h-[200px] mb-10 overflow-hidden rounded-lg relative'>

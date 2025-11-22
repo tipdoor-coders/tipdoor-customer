@@ -100,7 +100,7 @@ const Home = () => {
 
     return (
         <>
-            <header className="bg-white shadow-sm">
+            <header className="bg-white shadow-xs">
                 <div className="max-w-[1200px] mx-auto p-5">
                     <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">
                         Welcome to&nbsp;
@@ -118,7 +118,7 @@ const Home = () => {
 
             <main className='max-w-[1200px] mx-auto p-5'>
                 {/* <!-- 1. Big Picture as a Promotion Banner --> */}
-                <section className='promotion-banner w-full md:h-[65vh] h-[200px] mb-10 overflow-hidden rounded-lg relative'>
+                <section className='promotion-banner w-full md:h-[65vh] h-[200px] mb-8 overflow-hidden rounded-lg relative'>
                     {images.map((src, i) => (
                         <div
                             key={i}
@@ -137,7 +137,7 @@ const Home = () => {
                 </section>
 
                 {/* <!-- 2. Features with Several Graphics --> */}
-                <section className="features flex justify-between max-md:items-center md:gap-5 gap-1.5 mb-10">
+                <section className="features flex justify-between max-md:items-center md:gap-5 gap-1.5 mb-8">
                     <h2 className='max-md:hidden text-3xl font-bold mb-5 text-center w-1/3'>Our Features</h2>
                     {/* AI Try-On */}
                     <div className="feature max-md:mb-5 max-md:min-h-48 text-center flex flex-col md:justify-center items-center flex-1 px-4 py-2 bg-white rounded-lg shadow-md mb-4 md:mb-0 transition-transform hover:-translate-y-1 hover:shadow-lg">

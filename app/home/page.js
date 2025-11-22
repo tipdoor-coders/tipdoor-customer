@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { fetchWithAuth } from '@/lib/api';
 import Image from 'next/image';
 
 const Home = () => {
@@ -157,8 +156,10 @@ const Home = () => {
                     </div>
                 </section>
 
-                {/* <!-- 3. A Section with Further Divisions (New Products, Latest Products, Recommended for You, etc.) --> */}
+                {/* <!-- 3. Section with Further Divisions (New Products, Latest Products, Recommended for You, etc.) --> */}
                 <section className="product-sections mt-10">
+
+                    {/* New Products */}
                     <div className="product-category mb-10 new-products">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>New Products</h2>
                         {productsError && <p className="text-red-500">{productsError}</p>}
@@ -178,6 +179,7 @@ const Home = () => {
                         </div >
                     </div >
 
+                    {/* Latest Products */}
                     <div className="product-category mb-10 latest-arrival">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Latest Arrival</h2>
                         {latestError && <p className="text-red-500">{latestError}</p>}
@@ -197,6 +199,7 @@ const Home = () => {
                         </div>
                     </div>
 
+                    {/* Recommended for You */}
                     <div className="product-category mb-10 recommended">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Recommended for You</h2>
                         {productsError && <p className="text-red-500">{productsError}</p>}

@@ -160,7 +160,7 @@ const Home = () => {
                 <section className="product-sections mt-10">
 
                     {/* New Products */}
-                    <div className="product-category mb-10 new-products">
+                    <div className="product-category mb-10 bg-white p-5 rounded-lg shadow-md new-products">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>New Products</h2>
                         {productsError && <p className="text-red-500">{productsError}</p>}
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -180,7 +180,7 @@ const Home = () => {
                     </div >
 
                     {/* Latest Products */}
-                    <div className="product-category mb-10 latest-arrival">
+                    <div className="product-category mb-10 bg-white p-5 rounded-lg shadow-md latest-arrival">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Latest Arrival</h2>
                         {latestError && <p className="text-red-500">{latestError}</p>}
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -200,7 +200,7 @@ const Home = () => {
                     </div>
 
                     {/* Recommended for You */}
-                    <div className="product-category mb-10 recommended">
+                    <div className="product-category mb-10 bg-white p-5 rounded-lg shadow-md recommended">
                         <h2 className='text-3xl font-bold mb-5 text-neutral-800'>Recommended for You</h2>
                         {productsError && <p className="text-red-500">{productsError}</p>}
                         <div className="product-list flex overflow-x-auto gap-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

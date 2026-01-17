@@ -184,7 +184,7 @@ const Home = () => {
                                 products.map((product) => (
                                     <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
                                         <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
                                             <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
@@ -204,7 +204,7 @@ const Home = () => {
                                 latestProducts.map((product) => (
                                     <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
                                         <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
                                             <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
@@ -224,7 +224,7 @@ const Home = () => {
                                 products.map((product) => (
                                     <Link key={product.id} href={`/products/${product.id}`} className="block no-underline text-inherit" target="_blank">
                                         <article className="product-card max-md:w-full bg-white p-5 rounded-lg shadow-md min-w-3xs text-center snap-start transition-transform duration-300 ease-in-out hover:scale-105">
-                                            <img className='w-full h-auto rounded-lg mb-2.5' src={product.image} alt={product.name} />
+                                            <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
                                             <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>

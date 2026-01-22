@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { fetchWithAuth } from '@/lib/api'
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -13,26 +14,18 @@ const Home = () => {
     const handleAddToCart = async (e, product) => {
         e.preventDefault(); // prevents article's onClick
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/add/`, {
+            const response = await fetchWithAuth('cart/add/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({ product_id: product.id })
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            console.log('Added to cart:', response);
 
-            const data = await response.json();
-            console.log('Added to cart:', data);
         } catch (err) {
-            console.error(err);
+            console.error('Failed to add to cart:', err);
             alert('Failed to add to cart.');
         }
     };
-
     // Fetch products
     useEffect(() => {
         const fetchData = async () => {

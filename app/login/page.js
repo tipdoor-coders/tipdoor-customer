@@ -2,26 +2,63 @@
 import React from 'react'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { loginUser } from '@/lib/api';
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 
 const Login = () => {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [step, setStep] = useState(1);
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e){
+  const handleSendOTP = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError('');
 
     try {
-      await loginUser(username, password);
-      router.push('/home');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/otp/send/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile_number: mobileNumber })
+      });
+
+      if (!response.ok) throw new Error('Failed to send OTP');
+
+      setStep(2);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to send OTP');
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/otp/verify/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile_number: mobileNumber, otp })
+      });
+
+      if (!response.ok) throw new Error('Invalid OTP');
+
+      const data = await response.json();
+      localStorage.setItem('access', data.access);
+      localStorage.setItem('refresh', data.refresh);
+
+      router.push('/');
+    } catch (err) {
+      setError(err.message || 'Invalid OTP');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -29,44 +66,68 @@ const Login = () => {
 
         <div className="flex flex-col gap-2 items-center p-10">
           <h2 className="text-3xl font-bold my-5">Sign In</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-64">
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div>
-              <label className="block text-gray-700 text-sm font-medium mb-1">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff]"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 text-sm font-medium mb-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff]"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-[#007bff] hover:bg-[#0056b3] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300"
-            >
-              Sign In
-            </button>
-          </form>
+          <div>
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-          <p className="mt-4 text-center text-gray-600">
-            Don&apos;t have an account?{' '}
-            <a href="/register" className="text-[#007bff] hover:underline font-medium">
-              Sign up here
-            </a>
-          </p>
-
-          <h2 className='text-3xl font-bold my-5'>Sign up</h2>
+            {step === 1 ? (
+              <form onSubmit={handleSendOTP} className="flex flex-col gap-4 w-64">
+                <div>
+                  <label className="block text-gray-700 text-sm font-medium mb-1">
+                    Mobile Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                    placeholder="Enter mobile number"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff]"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-[#007bff] hover:bg-[#0056b3] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300 disabled:opacity-50"
+                >
+                  {loading ? 'Sending...' : 'Send OTP'}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerifyOTP} className="flex flex-col gap-4 w-64">
+                <div>
+                  <label className="block text-gray-700 text-sm font-medium mb-1">
+                    Enter OTP
+                  </label>
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="6-digit code"
+                    maxLength={6}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007bff] text-center text-2xl tracking-widest"
+                    required
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    OTP sent to {mobileNumber}
+                  </p>
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-[#007bff] hover:bg-[#0056b3] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300 disabled:opacity-50"
+                >
+                  {loading ? 'Verifying...' : 'Verify OTP'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="text-[#007bff] text-sm hover:underline"
+                >
+                  Change phone/email
+                </button>
+              </form>
+            )}
+          </div>
 
           <button onClick={() => { signIn("google") }}
             className="flex items-center w-64 bg-slate-50 text-black border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">

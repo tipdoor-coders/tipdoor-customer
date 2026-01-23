@@ -1,22 +1,14 @@
 'use client'
-import React, { useState } from 'react'
-import { useSession, signIn, signOut } from "next-auth/react"
+import React, { useState, useEffect } from 'react'
 import NavLink from 'next/link'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 const Navbar = () => {
-    const { data: session } = useSession()
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const router = useRouter()
-    // if (session) {
-    //     return <>
-    //         Signed in as {session.user.email} <br />
-    //         <button onClick={() => signOut()}>Sign out</button>
-    //     </>
-    // }
-
     const pathname = usePathname()
 
     // Function to check if current path matches the nav item
@@ -41,6 +33,52 @@ const Navbar = () => {
             router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
         }
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem('access')
+        localStorage.removeItem('refresh')
+        setIsLoggedIn(false)
+        router.push('/login')
+    }
+
+    useEffect(() => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('access') : null
+        setIsLoggedIn(!!token)
+    }, [])
+
+    useEffect(() => {
+        const validateToken = async () => {
+            const token = localStorage.getItem('access')
+
+            if (!token) {
+                setIsLoggedIn(false)
+                return
+            }
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/token/verify/`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ token })
+                })
+                if (!response.ok) {
+                    throw new Error('Invalid token')
+                }
+                setIsLoggedIn(true)
+            } catch (err) {
+                console.error('Token validation failed:', err)
+                localStorage.removeItem('access')
+                localStorage.removeItem('refresh')
+                setIsLoggedIn(false)
+            } finally {
+            }
+        }
+        validateToken()
+    }, [])
 
     return (
         <header className='bg-white py-2.5 sticky top-0 z-50 md:shadow-sm shadow-md'>
@@ -90,11 +128,22 @@ const Navbar = () => {
                 </form>
 
                 <div className='max-md:col-start-5 flex justify-end'>
-                    {session && <button className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2' onClick={() => { signOut() }}>Logout</button>}
+                    {isLoggedIn && (
+                        <button
+                            className='text-white w-fit bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2'
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+                    )}
 
-                    {!session && <Link href={"/login"}>
-                        <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2'>Login</button>
-                    </Link>}
+                    {!isLoggedIn && (
+                        <Link href="/login">
+                            <button className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm md:px-5 px-2.5 py-2.5 text-center me-2'>
+                                Login
+                            </button>
+                        </Link>
+                    )}
                 </div>
 
             </nav>

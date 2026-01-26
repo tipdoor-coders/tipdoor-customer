@@ -12,6 +12,9 @@ const ProductDetails = () => {
     const [userImage, setUserImage] = useState(null)
     const [tryOnResult, setTryOnResult] = useState(null)
     const [tryOnLoading, setTryOnLoading] = useState(false)
+    const [cartItemId, setCartItemId] = useState(null)
+    const [cartQty, setCartQty] = useState(0)
+    const [initializing, setInitializing] = useState(true)
 
 
     useEffect(() => {
@@ -31,16 +34,74 @@ const ProductDetails = () => {
         fetchProduct()
     }, [id])
 
-    const handleAddToCart = async () => {
-        try {
-            const response = await fetchWithAuth("cart/add/", {
-                method: "POST",
-                body: JSON.stringify({ product_id: product.id })
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const cart = await fetchWithAuth("cart/")
+                const item = cart.items?.find(
+                    (i) => i.product.id === product.id
+                )
+                if (item) {
+                    setCartItemId(item.id)
+                    setCartQty(item.quantity)
+                } else {
+                    setCartItemId(null)
+                    setCartQty(0)
+                }
+            } catch (err) {
+                console.error(err)
+            } finally {
+                setInitializing(false)
+            }
+        }
+
+        if (product?.id) {
+            fetchCart()
+        }
+    }, [product?.id])
+
+    const addToCart = async () => {
+        const cart = await fetchWithAuth("cart/add/", {
+            method: "POST",
+            body: JSON.stringify({
+                product_id: product.id,
+                quantity: 1
             })
-            console.log("Added to cart:", response)
+        })
+
+        const item = cart.items.find(
+            (i) => i.product.id === product.id
+        )
+
+        setCartItemId(item.id)
+        setCartQty(item.quantity)
+    }
+
+    const handleQuantityChange = async (newQuantity) => {
+        if (!cartItemId) return;
+        try {
+            if (newQuantity < 1) {
+                await fetchWithAuth(
+                    `cart/remove/${cartItemId}/`,
+                    { method: "DELETE" }
+                )
+                setCartItemId(null)
+                setCartQty(0)
+            } else {
+                const response = await fetchWithAuth(
+                    `cart/update/${cartItemId}/`,
+                    {
+                        method: "PATCH",
+                        body: JSON.stringify({ quantity: newQuantity })
+                    }
+                )
+                const item = response.items.find(
+                    (i) => i.id === cartItemId
+                )
+                setCartQty(item.quantity)
+            }
         } catch (err) {
             console.error(err)
-            alert("Failed to add to cart.")
         }
     }
 
@@ -174,12 +235,41 @@ const ProductDetails = () => {
                         )}
                     </div>
                     <p className="text-gray-600 mb-6">{product.description}</p>
-                    <button
-                        onClick={handleAddToCart}
-                        className="px-6 py-3 bg-[#5e17eb] text-white rounded-md hover:bg-[#4b12c2] transition-colors duration-200"
-                    >
-                        Add to Cart
-                    </button>
+                    <div className="flex items-center gap-3">
+                        {initializing ? (
+                            <div className="h-10 w-32 bg-gray-200 animate-pulse rounded-md" />
+                        ) : cartQty === 0 ? (
+                            <button
+                                onClick={addToCart}
+                                disabled={loading}
+                                className="px-5 py-2 bg-[#5e17eb] text-white rounded-md"
+                            >
+                                Add to Cart
+                            </button>
+                        ) : (
+                            <div className="flex items-center border rounded-md">
+                                <button
+                                    onClick={() => handleQuantityChange(cartQty - 1)}
+                                    disabled={loading}
+                                    className="px-4 py-2 text-lg"
+                                >
+                                    −
+                                </button>
+
+                                <span className="px-4 py-2 font-semibold">
+                                    {cartQty}
+                                </span>
+
+                                <button
+                                    onClick={() => handleQuantityChange(cartQty + 1)}
+                                    disabled={loading}
+                                    className="px-4 py-2 text-lg"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

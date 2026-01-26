@@ -44,6 +44,15 @@ const MyCart = () => {
         }
     };
 
+    const handleCheckout = () => {
+        const token = localStorage.getItem('access')
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        router.push('/checkout')
+    };
+
     // Calculate total
     const total = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
@@ -120,7 +129,7 @@ const MyCart = () => {
                             Total: &#8377;<span id="total-price">{total.toFixed(2)}</span>
                         </p>
                         <button
-                            onClick={() => router.push("/checkout")}
+                            onClick={handleCheckout}
                             className="checkout-btn bg-[#5cb85c] hover:bg-[#4cae4c] px-5 py-2.5 text-white md:text-base text-lg max-md:w-full border-none rounded-sm cursor-pointer"
                         >
                             Proceed to Checkout

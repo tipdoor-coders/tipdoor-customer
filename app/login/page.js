@@ -20,6 +20,7 @@ const Login = () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/otp/send/`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile_number: mobileNumber })
       });
@@ -42,6 +43,7 @@ const Login = () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/otp/verify/`, {
         method: 'POST',
+        credentials: 'include', // ← ADD THIS to send/receive cookies
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile_number: mobileNumber, otp })
       });

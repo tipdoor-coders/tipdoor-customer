@@ -3,20 +3,29 @@ import { fetchWithAuth } from '@/lib/api';
 import React, { useEffect, useState } from 'react'
 
 const MyAccount = () => {
-    const [formData, setFormData] = useState({
-        username: "",
-        email: "",
-    });
+    const [formData, setFormData] = useState({ username: "", email: "" });
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await fetchWithAuth(`user/`);
-                setFormData(response);
+                const response = await fetchWithAuth("user/");
+                setFormData({
+                    username: response.username,
+                    email: response.email,
+                });
             } catch (err) {
-                console.log("Failed to fetch user info: ", err);
+                if (err?.status === 401 || err?.status === 403) {
+                    setIsAuthenticated(false);
+                } else {
+                    console.error("err");
+                }
+            } finally {
+                setLoading(false);
             }
         };
+
         fetchUser();
     }, []);
 
@@ -28,6 +37,24 @@ const MyAccount = () => {
         e.preventDefault();
         console.log("Form submitted: ", formData);
     };
+
+    if (loading) {
+        return <div className="p-5">Loading account…</div>;
+    }
+
+    if (!isAuthenticated) {
+        return (
+            <div className="p-5 text-center">
+                <p className="mb-4">Please log in to access your account.</p>
+                <a
+                    href="/login"
+                    className="px-4 py-2 bg-[#5e17eb] text-white rounded-md"
+                >
+                    Login
+                </a>
+            </div>
+        );
+    }
 
     return (
         <main className='p-5'>

@@ -3,6 +3,7 @@ import { fetchWithAuth } from "@/lib/api"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { initiateFashnJob, getFashnJobStatus, toBase64 } from "@/lib/tryOnApi"
+import AddToCartProduct from '@/components/AddToCartProduct'
 
 const ProductDetails = () => {
     const [product, setProduct] = useState(null)
@@ -235,41 +236,7 @@ const ProductDetails = () => {
                         )}
                     </div>
                     <p className="text-gray-600 mb-6">{product.description}</p>
-                    <div className="flex items-center gap-3">
-                        {initializing ? (
-                            <div className="h-10 w-32 bg-gray-200 animate-pulse rounded-md" />
-                        ) : cartQty === 0 ? (
-                            <button
-                                onClick={addToCart}
-                                disabled={loading}
-                                className="px-5 py-2 bg-[#5e17eb] text-white rounded-md"
-                            >
-                                Add to Cart
-                            </button>
-                        ) : (
-                            <div className="flex items-center border rounded-md">
-                                <button
-                                    onClick={() => handleQuantityChange(cartQty - 1)}
-                                    disabled={loading}
-                                    className="px-4 py-2 text-lg"
-                                >
-                                    −
-                                </button>
-
-                                <span className="px-4 py-2 font-semibold">
-                                    {cartQty}
-                                </span>
-
-                                <button
-                                    onClick={() => handleQuantityChange(cartQty + 1)}
-                                    disabled={loading}
-                                    className="px-4 py-2 text-lg"
-                                >
-                                    +
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                    <AddToCartProduct product={product} />
                 </div>
             </div>
         </div>

@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchWithAuth } from '@/lib/api'
+import { fetchWithAuth } from '@/lib/api';
+import AddToCartInline from '@/components/AddToCartInline';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -180,7 +181,7 @@ const Home = () => {
                                             <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
-                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                            <AddToCartInline product={product} />
                                         </article>
                                     </Link>
                                 ))
@@ -200,7 +201,7 @@ const Home = () => {
                                             <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
-                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                            <AddToCartInline product={product} />
                                         </article>
                                     </Link>
                                 ))
@@ -220,7 +221,7 @@ const Home = () => {
                                             <img className='w-full h-48 object-cover rounded-lg mb-2.5' src={product.image} alt={product.name} />
                                             <h3 className='font-bold text-xl text-gray-800'>{product.name}</h3>
                                             <p className='text-gray-800 mb-5'>&#8377;{product.price}</p>
-                                            <button className='bg-[#007bff] hover:bg-[#0056b3] text-white border-none px-5 py-2.5 rounded-md cursor-pointer transition-colors duration-300' onClick={(e) => handleAddToCart(e, product)}>Add to Cart</button>
+                                            <AddToCartInline product={product} />
                                         </article>
                                     </Link>
                                 ))
